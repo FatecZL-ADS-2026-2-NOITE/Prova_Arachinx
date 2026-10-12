@@ -80,3 +80,4 @@ const VAGAS = [
     publicada: "06/10/2026"
   }
 ];
+

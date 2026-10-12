@@ -1,359 +1,293 @@
 /* ==========================================================
    ARACHNIX | Mural de Vagas de Estágio em TI
+   Visual: tema escuro com vidro fosco + Feed Horizontal
    ========================================================== */
 
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap");
+
 :root {
-  --tinta: #14182b;
-  --tinta-suave: #4a506b;
-  --fundo: #f3f4f9;
-  --superficie: #ffffff;
-  --linha: #d9dcea;
+  --texto: #f2f4f8;
+  --texto-suave: #aab0bf;
+  --vidro: rgba(255, 255, 255, .08);
+  --vidro-forte: rgba(255, 255, 255, .14);
+  --borda-vidro: rgba(255, 255, 255, .16);
 
-  --destaque: #3d3fd6;
-  --destaque-escuro: #2b2db0;
+  --destaque: #38bdf8;
+  --destaque-escuro: #0ea5e9;
 
-  --cor-presencial: #c26a00;
-  --cor-hibrido: #00867a;
-  --cor-remoto: #6b3fd1;
+  --cor-presencial: #fbb04a;
+  --cor-hibrido: #2dd4bf;
+  --cor-remoto: #a78bfa;
 
-  --verde-bolsa: #0b6b3a;
-  --encerrada: #8a8fa6;
+  --verde-bolsa: #6ee7a8;
+  --encerrada: #7d8394;
 
-  --raio: 10px;
-  --sombra-foco: 0 0 0 3px rgba(61, 63, 214, .35);
+  --raio: 20px;
+  --sombra-foco: 0 0 0 3px rgba(56, 189, 248, .45);
 }
 
-/* ---------- Base ---------- */
 *, *::before, *::after { box-sizing: border-box; }
 
+/* ---------- Base & Bloqueio de Scroll Vertical Nativo ---------- */
 body {
   margin: 0;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  font-family: "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif;
+  overflow: hidden; /* Trava o scroll vertical na página toda */
+  font-family: "Plus Jakarta Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
   font-size: 1rem;
   line-height: 1.5;
-  color: var(--tinta);
-  background: var(--fundo);
+  color: var(--texto);
+  color-scheme: dark;
+
+  background:
+    radial-gradient(ellipse at 20% 0%, rgba(56, 189, 248, .14), transparent 50%),
+    radial-gradient(ellipse at 90% 40%, rgba(167, 139, 250, .12), transparent 55%),
+    linear-gradient(180deg, #0b0e14 0%, #12161f 50%, #0a0c11 100%);
+  background-attachment: fixed;
 }
 
 h1, h2, h3, p { margin: 0; }
+.escondido { display: none !important; }
+.so-leitor { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
-.conteudo {
+/* ---------- Estrutura do Feed Horizontal ---------- */
+#horizontal-container {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory; /* Trava em cada tela */
+}
+
+#horizontal-container::-webkit-scrollbar { display: none; } /* Oculta a barra de baixo */
+
+.slide {
+  flex: 0 0 100vw;
+  width: 100vw;
+  height: 100vh;
+  scroll-snap-align: start;
+  overflow-y: auto; /* Permite rolar para baixo DENTRO de um ambiente específico */
+  overflow-x: hidden;
+  padding-top: 6rem;
+  padding-bottom: 2rem;
+}
+
+.slide-conteudo {
   width: 100%;
   max-width: 1100px;
   margin: 0 auto;
-  padding: 0 1rem;
+  padding: 0 1.5rem;
 }
 
-.escondido { display: none !important; }
+/* Barra de rolagem interna de cada slide */
+.slide::-webkit-scrollbar { width: 8px; }
+.slide::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.2); border-radius: 10px; }
 
-.so-leitor {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
-  white-space: nowrap;
-}
-
-/* ---------- Cabeçalho ---------- */
-#cabecalho {
-  background: var(--tinta);
-  color: #fff;
-  padding: 2rem 0 2.25rem;
-  border-bottom: 4px solid var(--destaque);
-}
-
-.nome-grupo {
-  font-weight: 800;
-  letter-spacing: .12em;
-  font-size: .95rem;
-  color: #aeb2ff;
-  margin-bottom: .5rem;
-}
-
-#cabecalho h1 {
-  font-size: clamp(1.6rem, 5vw, 2.5rem);
-  line-height: 1.15;
-  font-weight: 800;
-  max-width: 22ch;
-}
-
-.subtitulo {
-  margin-top: .75rem;
-  max-width: 60ch;
-  color: #d3d6ee;
-}
-
-/* ---------- Conteúdo principal ---------- */
-main {
-  flex: 1;
-  padding-top: 1.5rem;
-  padding-bottom: 2.5rem;
-}
-
-/* ---------- Busca e filtro ---------- */
-#area-busca {
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-  gap: 1rem;
-  padding: 1rem;
-  background: var(--superficie);
-  border: 1px solid var(--linha);
-  border-radius: var(--raio);
-}
-
-.campo-grupo {
-  display: flex;
-  flex-direction: column;
-  gap: .35rem;
-  min-width: 0;
-}
-
-.campo-grupo label {
-  font-weight: 600;
-  font-size: .9rem;
-}
-
-input[type="search"],
-select {
-  width: 100%;
-  font: inherit;
-  color: var(--tinta);
-  background: #fff;
-  padding: .65rem .75rem;
-  border: 1px solid #b7bbd2;
-  border-radius: 8px;
-}
-
-input[type="search"]:focus,
-select:focus,
-button:focus-visible,
-.btn-detalhes:focus-visible {
-  outline: none;
-  border-color: var(--destaque);
-  box-shadow: var(--sombra-foco);
-}
-
-/* ---------- Botões ---------- */
-button {
-  font: inherit;
-  font-weight: 600;
+/* ---------- Setas de Navegação ---------- */
+.nav-arrow {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(15, 15, 15, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--texto);
+  font-size: 1.2rem;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
   cursor: pointer;
-  color: #fff;
-  background: var(--destaque);
-  border: 2px solid var(--destaque);
-  border-radius: 8px;
-  padding: .6rem 1rem;
-  transition: background-color .15s;
-}
-
-button:hover { background: var(--destaque-escuro); border-color: var(--destaque-escuro); }
-
-button.btn-secundario {
-  color: var(--destaque);
-  background: transparent;
-}
-
-button.btn-secundario:hover {
-  color: #fff;
-  background: var(--destaque);
-}
-
-#area-ordenacao {
+  z-index: 9998;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   display: flex;
-  flex-wrap: wrap;
-  gap: .75rem;
-  margin-top: 1rem;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+.nav-arrow.left { left: 1rem; }
+.nav-arrow.right { right: 1rem; }
+.nav-arrow:hover { background: var(--destaque); border-color: var(--destaque); color: #06202e; }
+
+/* ---------- Barra de Navegação Minimalista ---------- */
+#barra {
+  position: fixed;
+  top: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: fit-content;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2.5rem;
+  background: rgba(15, 15, 15, 0.75); 
+  border: 1px solid rgba(255, 255, 255, 0.08); 
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  padding: 0.6rem 1.5rem;
+  border-radius: 999px;
+  z-index: 9999;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
 
-/* ---------- Contador e mensagem vazia ---------- */
-#area-contador {
-  margin: 1.25rem 0 1rem;
-  color: var(--tinta-suave);
+.barra-links { display: flex; list-style: none; gap: 2rem; margin: 0; padding: 0; }
+.barra-links a { text-decoration: none; color: var(--texto-suave); font-size: 0.85rem; font-weight: 500; transition: color 0.3s ease; }
+.barra-links a.ativo, .barra-links a:hover { color: var(--destaque); font-weight: 700; }
+
+.btn-icone {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--texto-suave);
+  border-radius: 50%;
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.3s ease;
+}
+.btn-icone:hover { background: rgba(255, 255, 255, 0.15); color: var(--texto); }
+
+/* ---------- Efeito Vidro ---------- */
+#area-busca, .cartao-vaga, .painel-detalhes, #mensagem-vazia {
+  background: var(--vidro);
+  border: 1px solid var(--borda-vidro);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, .25);
 }
 
-#area-contador strong { color: var(--tinta); }
+/* ---------- Textos e Hero (Tela 1) ---------- */
+.hero { text-align: center; padding-top: 1rem; }
+.nome-grupo { display: inline-block; font-weight: 700; letter-spacing: .12em; font-size: .9rem; padding: .4rem 1.1rem; margin-bottom: 1.25rem; background: var(--vidro); border: 1px solid var(--borda-vidro); border-radius: 999px; }
+.hero h1 { font-size: clamp(1.9rem, 5.5vw, 3.2rem); font-weight: 800; max-width: 18ch; margin: 0 auto; line-height: 1.12; }
+.subtitulo { margin: 1rem auto 2rem; max-width: 55ch; color: var(--texto-suave); }
 
-#mensagem-vazia {
-  padding: 1.25rem;
-  text-align: center;
-  color: var(--tinta-suave);
-  background: var(--superficie);
-  border: 2px dashed var(--linha);
-  border-radius: var(--raio);
-}
+.cartao-busca-rapida { max-width: 600px; margin: 0 auto 3rem; }
+.busca-titulo { font-size: 1.2rem; margin-bottom: 1rem; }
+.chips { display: flex; gap: 0.5rem; justify-content: center; margin-top: 1rem; }
+.chip { padding: 0.3rem 0.8rem; font-size: 0.8rem; border-radius: 20px; border: 1px solid var(--borda-vidro); background: transparent; color: var(--texto-suave); cursor: pointer; }
+.chip:hover { border-color: var(--destaque); color: var(--destaque); }
 
-/* ---------- Lista e cartões ----------
-   Estrutura que o script.js deve gerar para cada vaga:
+/* Estatísticas */
+.stats { display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; margin-bottom: 3rem; }
+.stat { display: flex; flex-direction: column; align-items: center; }
+.stat strong { font-size: 2rem; color: var(--destaque); line-height: 1; }
+.stat span { font-size: 0.85rem; color: var(--texto-suave); margin-top: 0.3rem; }
 
-   <article class="cartao-vaga modalidade-remoto">
-     <div class="cartao-topo">
-       <span class="selo selo-remoto">Remoto</span>
-       <span class="selo-status">Encerrada</span>      (só se ativa === false)
-     </div>
-     <h3 class="cartao-cargo">Estágio em Front-end</h3>
-     <p class="cartao-empresa">PixelForge</p>
-     <p class="cartao-bolsa"><span>Bolsa</span> R$ 1.800</p>
-     <button type="button" class="btn-detalhes">Ver detalhes</button>
-   </article>
+/* Seções Gerais */
+.secao { padding: 3rem 0; }
+.secao-titulo { font-size: 2rem; font-weight: 800; text-align: center; margin-bottom: 0.5rem; }
+.secao-intro { color: var(--texto-suave); text-align: center; margin-bottom: 2.5rem; }
 
-   Se a vaga for encerrada, acrescente a classe "cartao-encerrada"
-   no article.
------------------------------------------------- */
-#lista-vagas {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 1rem;
-}
+/* Passos "Como funciona" */
+.passos { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; list-style: none; padding: 0; }
+.passo { background: rgba(255,255,255,0.03); padding: 1.5rem; border-radius: var(--raio); border: 1px solid var(--borda-vidro); }
+.passo h3 { color: var(--destaque); margin-bottom: 0.5rem; }
+.passo p { font-size: 0.9rem; color: var(--texto-suave); }
+
+/* ---------- Busca e Filtros (Tela 2) ---------- */
+#area-busca { display: grid; grid-template-columns: 2fr 1fr; gap: 1rem; padding: 1.25rem; border-radius: var(--raio); }
+.campo-grupo { display: flex; flex-direction: column; gap: .4rem; }
+.campo-grupo label { font-weight: 600; font-size: .9rem; color: var(--texto-suave); }
+
+input[type="search"], select { width: 100%; font: inherit; color: var(--texto); background: rgba(255, 255, 255, .1); padding: .8rem 1.1rem; border: 1px solid transparent; border-radius: 999px; }
+input[type="search"]::placeholder { color: var(--texto-suave); }
+select option { background: #1a1f2b; color: var(--texto); }
+input:focus, select:focus, button:focus-visible { outline: none; border-color: var(--destaque); box-shadow: var(--sombra-foco); }
+
+#area-ordenacao { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 1rem; }
+#area-contador { margin: 1.5rem 0 1rem; color: var(--texto-suave); }
+#area-contador strong { color: var(--texto); }
+#mensagem-vazia { padding: 1.5rem; text-align: center; color: var(--texto-suave); border-style: dashed; border-radius: var(--raio); }
+
+/* Botões */
+button { font: inherit; font-weight: 600; font-size: .95rem; cursor: pointer; color: #06202e; background: var(--destaque); border: 1px solid var(--destaque); border-radius: 999px; padding: .65rem 1.25rem; transition: background-color .15s, color .15s; }
+button:hover { background: var(--destaque-escuro); border-color: var(--destaque-escuro); }
+button.btn-secundario { color: var(--texto); background: var(--vidro-forte); border-color: var(--borda-vidro); }
+button.btn-secundario:hover { color: #06202e; background: var(--destaque); border-color: var(--destaque); }
+
+/* ---------- CARTÕES DE VAGA (RESTAURADOS) ---------- */
+#lista-vagas { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1rem; }
 
 .cartao-vaga {
   --cor-modalidade: var(--destaque);
-
   display: flex;
   flex-direction: column;
   gap: .5rem;
-  min-width: 0;
-  padding: 1.1rem 1.1rem 1.1rem 1.25rem;
-  background: var(--superficie);
-  border: 1px solid var(--linha);
-  border-left: 6px solid var(--cor-modalidade);
+  padding: 1.25rem;
   border-radius: var(--raio);
+  border-top: 3px solid var(--cor-modalidade);
+  transition: background-color .2s, border-color .2s;
 }
-
-.cartao-vaga:hover { border-color: var(--cor-modalidade); }
+.cartao-vaga:hover { background: var(--vidro-forte); border-color: var(--cor-modalidade); }
 
 .modalidade-presencial { --cor-modalidade: var(--cor-presencial); }
 .modalidade-hibrido    { --cor-modalidade: var(--cor-hibrido); }
 .modalidade-remoto     { --cor-modalidade: var(--cor-remoto); }
 
-.cartao-topo {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: .5rem;
-}
+.cartao-topo { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem; }
 
 .selo {
   display: inline-block;
-  padding: .1rem .6rem;
+  padding: .15rem .7rem;
   font-size: .8rem;
   font-weight: 700;
-  color: #fff;
-  background: var(--cor-modalidade);
+  color: var(--cor-modalidade);
+  background: rgba(255, 255, 255, .08);
+  border: 1px solid var(--cor-modalidade);
   border-radius: 999px;
 }
+.selo-presencial { color: var(--cor-presencial); border-color: var(--cor-presencial); }
+.selo-hibrido    { color: var(--cor-hibrido); border-color: var(--cor-hibrido); }
+.selo-remoto     { color: var(--cor-remoto); border-color: var(--cor-remoto); }
 
-.selo-presencial { background: var(--cor-presencial); }
-.selo-hibrido    { background: var(--cor-hibrido); }
-.selo-remoto     { background: var(--cor-remoto); }
+.selo-status { font-size: .8rem; font-weight: 700; color: #ffb4b4; background: rgba(239, 68, 68, .18); padding: .15rem .7rem; border-radius: 999px; }
 
-.selo-status {
-  font-size: .8rem;
-  font-weight: 700;
-  color: #7a1f1f;
-  background: #fbe3e3;
-  padding: .1rem .6rem;
-  border-radius: 999px;
-}
+.cartao-cargo { font-size: 1.1rem; line-height: 1.3; overflow-wrap: anywhere; }
+.cartao-empresa { color: var(--texto-suave); font-weight: 600; }
+.cartao-bolsa { margin-top: auto; padding-top: .5rem; font-size: 1.4rem; font-weight: 800; color: var(--verde-bolsa); font-variant-numeric: tabular-nums; }
+.cartao-bolsa span { display: block; font-size: .8rem; font-weight: 600; color: var(--texto-suave); }
+.btn-detalhes { margin-top: .5rem; width: 100%; }
 
-.cartao-cargo {
-  font-size: 1.1rem;
-  line-height: 1.3;
-  overflow-wrap: anywhere;
-}
+.cartao-encerrada { background: rgba(255, 255, 255, .04); }
+.cartao-encerrada .cartao-cargo, .cartao-encerrada .cartao-empresa, .cartao-encerrada .cartao-bolsa { color: var(--encerrada); }
+.cartao-encerrada .cartao-bolsa span { color: var(--encerrada); }
 
-.cartao-empresa {
-  color: var(--tinta-suave);
-  font-weight: 600;
-}
-
-.cartao-bolsa {
-  margin-top: auto;
-  padding-top: .5rem;
-  font-size: 1.35rem;
-  font-weight: 800;
-  color: var(--verde-bolsa);
-  font-variant-numeric: tabular-nums;
-}
-
-.cartao-bolsa span {
-  display: block;
-  font-size: .8rem;
-  font-weight: 600;
-  color: var(--tinta-suave);
-}
-
-.btn-detalhes {
-  margin-top: .5rem;
-  width: 100%;
-}
-
-.cartao-encerrada { background: #f7f7fa; }
-.cartao-encerrada .cartao-cargo,
-.cartao-encerrada .cartao-empresa { color: var(--encerrada); }
-.cartao-encerrada .cartao-bolsa { color: var(--encerrada); }
-
-/* ---------- Detalhes da vaga ---------- */
-#detalhes-vaga { max-width: 760px; }
-
-.painel-detalhes {
-  margin-top: 1rem;
-  padding: 1.5rem;
-  background: var(--superficie);
-  border: 1px solid var(--linha);
-  border-top: 6px solid var(--destaque);
-  border-radius: var(--raio);
-}
-
-.painel-detalhes h2 { font-size: 1.5rem; margin-bottom: 1rem; }
+/* ---------- DETALHES DA VAGA ---------- */
+#detalhes-vaga { max-width: 760px; margin: 0 auto; }
+.painel-detalhes { margin-top: 1rem; padding: 1.75rem; border-top: 3px solid var(--destaque); border-radius: var(--raio); }
+.painel-detalhes h2 { font-size: 1.6rem; margin-bottom: 1.25rem; letter-spacing: -.01em; }
 .painel-detalhes h3 { margin: 1.5rem 0 .4rem; font-size: 1.1rem; }
 
-.lista-detalhes {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1rem;
-  margin: 0;
-}
+.lista-detalhes { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin: 0; }
+.lista-detalhes dt { font-size: .85rem; font-weight: 600; color: var(--texto-suave); }
+.lista-detalhes dd { margin: 0; font-weight: 600; overflow-wrap: anywhere; }
+#detalhe-bolsa { color: var(--verde-bolsa); font-weight: 800; }
+#detalhe-requisitos { max-width: 65ch; color: var(--texto); }
 
-.lista-detalhes dt {
-  font-size: .85rem;
-  font-weight: 600;
-  color: var(--tinta-suave);
-}
-
-.lista-detalhes dd {
-  margin: 0;
-  font-weight: 600;
-  overflow-wrap: anywhere;
-}
-
-#detalhe-bolsa {
-  color: var(--verde-bolsa);
-  font-weight: 800;
-}
-
-#detalhe-requisitos { max-width: 65ch; }
+/* ---------- Time / Lista (Tela 3) ---------- */
+.time-lista { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; list-style: none; padding: 0; text-align: center; margin-bottom: 3rem; }
+.membro h3 { font-size: 1.1rem; margin-bottom: 0.3rem; }
+.membro p { font-size: 0.9rem; color: var(--texto-suave); }
+.avatar { display: inline-block; width: 80px; height: 80px; border-radius: 50%; background: var(--vidro-forte); border: 2px solid var(--destaque); margin-bottom: 1rem; }
 
 /* ---------- Rodapé ---------- */
-#rodape {
-  background: var(--tinta);
-  color: #d3d6ee;
-  padding: 1.25rem 0;
-  font-size: .9rem;
-}
-
+#rodape { color: var(--texto-suave); padding: 1.5rem 0; font-size: .9rem; text-align: center; border-top: 1px solid var(--borda-vidro); margin-top: 2rem; }
 #rodape .conteudo { display: grid; gap: .25rem; }
 
-/* ---------- Telas pequenas (até 600px) ---------- */
-@media (max-width: 600px) {
+/* ---------- Responsividade ---------- */
+@media (max-width: 768px) {
+  #barra { width: 90%; gap: 1rem; padding: 0.6rem 1rem; }
+  .barra-links { gap: 1rem; }
   #area-busca { grid-template-columns: 1fr; }
-
   #area-ordenacao button { width: 100%; }
-
   #lista-vagas { grid-template-columns: 1fr; }
-
-  .painel-detalhes { padding: 1.1rem; }
+  .painel-detalhes { padding: 1.25rem; }
+  .nav-arrow { width: 35px; height: 35px; font-size: 0.9rem; }
+  .nav-arrow.left { left: 0.5rem; }
+  .nav-arrow.right { right: 0.5rem; }
+  .slide { padding-top: 5rem; }
 }
