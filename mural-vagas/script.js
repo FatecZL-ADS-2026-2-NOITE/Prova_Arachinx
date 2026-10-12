@@ -1,9 +1,3 @@
-// ==========================================================
-// ARACHNIX | Mural de Vagas de Estágio em TI
-// Os dados vêm de dados.js (array VAGAS)
-// ==========================================================
-
-// ---------- Elementos da página ----------
 const listaVagas = document.querySelector("#lista-vagas");
 const campoPesquisa = document.querySelector("#campo-pesquisa");
 const filtroModalidade = document.querySelector("#filtro-modalidade");
@@ -14,23 +8,20 @@ const mensagemVazia = document.querySelector("#mensagem-vazia");
 const areaLista = document.querySelector("#area-lista");
 const areaDetalhes = document.querySelector("#detalhes-vaga");
 const btnVoltar = document.querySelector("#btn-voltar");
+const slideVagas = document.querySelector("#sec-vagas");
 
-// ---------- Estado ----------
 let ordenarPorBolsa = false;
 
-// Classe CSS de cada modalidade (sem acento, em minúsculas)
 const CLASSE_MODALIDADE = {
   "Presencial": "presencial",
   "Híbrido": "hibrido",
   "Remoto": "remoto"
 };
 
-// ---------- Funções auxiliares ----------
 function formatarBolsa(valor) {
   return valor.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
 }
 
-// Aplica busca + filtro (+ ordenação, se ativada) e devolve a lista final
 function obterVagasFiltradas() {
   const texto = campoPesquisa.value.trim().toLowerCase();
   const modalidade = filtroModalidade.value;
@@ -44,7 +35,6 @@ function obterVagasFiltradas() {
   });
 
   if (ordenarPorBolsa) {
-    // [...resultado] copia a lista para não mexer no array original
     resultado = [...resultado].sort(function (a, b) {
       return b.bolsa - a.bolsa;
     });
@@ -53,7 +43,6 @@ function obterVagasFiltradas() {
   return resultado;
 }
 
-// ---------- Renderização ----------
 function criarCartao(vaga) {
   const classe = CLASSE_MODALIDADE[vaga.modalidade];
 
@@ -99,7 +88,6 @@ function renderizar() {
   }
 }
 
-// ---------- Detalhes ----------
 function mostrarDetalhes(id) {
   const vaga = VAGAS.find(function (v) {
     return v.id === id;
@@ -115,15 +103,15 @@ function mostrarDetalhes(id) {
 
   areaLista.classList.add("escondido");
   areaDetalhes.classList.remove("escondido");
-  window.scrollTo(0, 0);
+  slideVagas.scrollTo(0, 0);
 }
 
 function voltarParaLista() {
   areaDetalhes.classList.add("escondido");
   areaLista.classList.remove("escondido");
+  slideVagas.scrollTo(0, 0);
 }
 
-// ---------- Eventos ----------
 campoPesquisa.addEventListener("input", renderizar);
 filtroModalidade.addEventListener("change", renderizar);
 
@@ -139,34 +127,92 @@ btnRestaurar.addEventListener("click", function () {
 
 btnVoltar.addEventListener("click", voltarParaLista);
 
-// ---------- Navbar ----------
-const btnMenu = document.querySelector("#btn-menu");
-const menuPrincipal = document.querySelector("#menu-principal");
-const linksMenu = document.querySelectorAll("#menu-principal a");
+const linksBarra = document.querySelectorAll(".barra-links a");
 
-function definirMenu(aberto) {
-  menuPrincipal.classList.toggle("aberto", aberto);
-  btnMenu.setAttribute("aria-expanded", aberto);
-  btnMenu.setAttribute("aria-label", aberto ? "Fechar menu" : "Abrir menu");
-}
-
-btnMenu.addEventListener("click", function () {
-  definirMenu(!menuPrincipal.classList.contains("aberto"));
+linksBarra.forEach(function (link) {
+  link.addEventListener("click", voltarParaLista);
 });
 
-// Ao clicar em qualquer link: volta para a lista (se estiver nos detalhes) e fecha o menu
-linksMenu.forEach(function (link) {
-  link.addEventListener("click", function () {
-    voltarParaLista();
-    definirMenu(false);
+const formRapido = document.querySelector("#form-rapido");
+const buscaRapida = document.querySelector("#busca-rapida");
+const chips = document.querySelectorAll(".chip");
+
+function irParaVagas() {
+  voltarParaLista();
+  slideVagas.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "start" });
+}
+
+formRapido.addEventListener("submit", function (evento) {
+  evento.preventDefault();
+  campoPesquisa.value = buscaRapida.value;
+  filtroModalidade.value = "todas";
+  renderizar();
+  irParaVagas();
+});
+
+chips.forEach(function (chip) {
+  chip.addEventListener("click", function () {
+    campoPesquisa.value = "";
+    filtroModalidade.value = chip.dataset.modalidade;
+    renderizar();
+    irParaVagas();
   });
 });
 
-document.addEventListener("keydown", function (evento) {
-  if (evento.key === "Escape") {
-    definirMenu(false);
+function preencherEstatisticas() {
+  const abertas = VAGAS.filter(function (vaga) {
+    return vaga.ativa;
+  });
+
+  const remotas = abertas.filter(function (vaga) {
+    return vaga.modalidade === "Remoto";
+  });
+
+  const empresas = VAGAS.map(function (vaga) {
+    return vaga.empresa;
+  }).filter(function (nome, posicao, lista) {
+    return lista.indexOf(nome) === posicao;
+  });
+
+  document.querySelector('[data-stat="abertas"]').textContent = abertas.length;
+  document.querySelector('[data-stat="empresas"]').textContent = empresas.length;
+  document.querySelector('[data-stat="remotas"]').textContent = remotas.length;
+}
+
+renderizar();
+preencherEstatisticas();
+
+const containerHorizontal = document.querySelector("#horizontal-container");
+let slideAtual = 0;
+let larguraTela = containerHorizontal.clientWidth;
+let ultimoRedimensionamento = 0;
+
+containerHorizontal.addEventListener("scroll", function () {
+  if (containerHorizontal.clientWidth !== larguraTela) {
+    return;
   }
+  slideAtual = Math.round(containerHorizontal.scrollLeft / larguraTela);
 });
 
-// ---------- Início ----------
-renderizar();
+window.addEventListener("resize", function () {
+  ultimoRedimensionamento = Date.now();
+  larguraTela = containerHorizontal.clientWidth;
+  containerHorizontal.scrollTo({ left: slideAtual * larguraTela, behavior: "instant" });
+});
+
+function limparFiltros() {
+  campoPesquisa.value = "";
+  buscaRapida.value = "";
+  filtroModalidade.value = "todas";
+  renderizar();
+}
+
+const observadorVagas = new IntersectionObserver(function (entradas) {
+  const saiuDaTela = entradas[entradas.length - 1].intersectionRatio < 0.01;
+  const foiRedimensionamento = Date.now() - ultimoRedimensionamento < 500;
+  if (saiuDaTela && !foiRedimensionamento) {
+    limparFiltros();
+  }
+}, { threshold: 0.01 });
+
+observadorVagas.observe(slideVagas);
