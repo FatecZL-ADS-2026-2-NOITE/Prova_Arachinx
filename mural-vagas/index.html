@@ -3,21 +3,26 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Mural de vagas de estágio em TI do grupo ARACHNIX.">
   <title>ARACHNIX | Mural de Vagas de Estágio em TI</title>
 
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-
   <header id="cabecalho">
-    <p class="nome-grupo">ARACHNIX</p>
-    <h1>Mural de Vagas de Estágio em TI</h1>
+    <div class="conteudo">
+      <p class="nome-grupo">ARACHNIX</p>
+      <h1>Mural de Vagas de Estágio em TI</h1>
+      <p class="subtitulo">Encontre uma vaga pela empresa, pelo cargo ou pela modalidade e compare as bolsas.</p>
+    </div>
   </header>
 
-  <main>
+  <main class="conteudo">
 
-    <section id="area-lista">
+    <!-- LISTA DE VAGAS -->
+    <section id="area-lista" aria-labelledby="titulo-lista">
+      <h2 id="titulo-lista" class="so-leitor">Lista de vagas</h2>
 
       <div id="area-busca">
         <div class="campo-grupo">
@@ -25,7 +30,8 @@
           <input
             type="search"
             id="campo-pesquisa"
-            placeholder="Digite o nome da empresa ou o cargo">
+            placeholder="Digite o nome da empresa ou o cargo"
+            autocomplete="off">
         </div>
 
         <div class="campo-grupo">
@@ -41,37 +47,68 @@
 
       <div id="area-ordenacao">
         <button type="button" id="btn-ordenar-bolsa">Ordenar por bolsa (maior para menor)</button>
-        <button type="button" id="btn-restaurar-ordem">Restaurar ordem original</button>
+        <button type="button" id="btn-restaurar-ordem" class="btn-secundario">Restaurar ordem original</button>
       </div>
 
-      <p id="area-contador">
-        Vagas encontradas: <span id="contador-vagas">0</span>
+      <p id="area-contador" role="status" aria-live="polite">
+        Vagas encontradas: <strong id="contador-vagas">0</strong>
       </p>
 
       <p id="mensagem-vazia" class="escondido">
         Nenhuma vaga encontrada para a pesquisa ou filtro selecionado.
       </p>
 
+      <!-- Os cartões são criados pelo script.js -->
       <div id="lista-vagas"></div>
-
     </section>
 
-    <section id="detalhes-vaga" class="escondido">
-      <button type="button" id="btn-voltar">← Voltar para a lista de vagas</button>
+    <!-- DETALHES DA VAGA -->
+    <section id="detalhes-vaga" class="escondido" aria-labelledby="titulo-detalhes">
+      <button type="button" id="btn-voltar" class="btn-secundario">← Voltar para a lista de vagas</button>
 
-      <h2>Detalhes da vaga</h2>
+      <article class="painel-detalhes">
+        <h2 id="titulo-detalhes">Detalhes da vaga</h2>
 
-      <p><strong>Empresa:</strong> <span id="detalhe-empresa"></span></p>
-      <p><strong>Cargo:</strong> <span id="detalhe-cargo"></span></p>
-      <p><strong>Modalidade:</strong> <span id="detalhe-modalidade"></span></p>
-      <p><strong>Bolsa:</strong> <span id="detalhe-bolsa"></span></p>
-      <p><strong>Data de publicação:</strong> <span id="detalhe-data"></span></p>
+        <dl class="lista-detalhes">
+          <div>
+            <dt>Empresa</dt>
+            <dd id="detalhe-empresa"></dd>
+          </div>
+          <div>
+            <dt>Cargo</dt>
+            <dd id="detalhe-cargo"></dd>
+          </div>
+          <div>
+            <dt>Modalidade</dt>
+            <dd id="detalhe-modalidade"></dd>
+          </div>
+          <div>
+            <dt>Bolsa</dt>
+            <dd id="detalhe-bolsa"></dd>
+          </div>
+          <div>
+            <dt>Data de publicação</dt>
+            <dd id="detalhe-data"></dd>
+          </div>
+          <div>
+            <dt>Situação</dt>
+            <dd id="detalhe-status"></dd>
+          </div>
+        </dl>
 
-      <h3>Requisitos</h3>
-      <p id="detalhe-requisitos"></p>
+        <h3>Requisitos</h3>
+        <p id="detalhe-requisitos"></p>
+      </article>
     </section>
 
   </main>
+
+  <footer id="rodape">
+    <div class="conteudo">
+      <p>© 2026 ARACHNIX - Prova de PI II FATEC ZL (ADS 2 - Prof. Rodrigo Faustino)</p>
+      <p>Time: <!-- escreva aqui o nome de cada integrante --></p>
+    </div>
+  </footer>
 
   <script src="dados.js"></script>
   <script src="script.js"></script>

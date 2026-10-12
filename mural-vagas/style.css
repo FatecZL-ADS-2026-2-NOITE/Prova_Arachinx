@@ -1,0 +1,359 @@
+/* ==========================================================
+   ARACHNIX | Mural de Vagas de Estágio em TI
+   ========================================================== */
+
+:root {
+  --tinta: #14182b;
+  --tinta-suave: #4a506b;
+  --fundo: #f3f4f9;
+  --superficie: #ffffff;
+  --linha: #d9dcea;
+
+  --destaque: #3d3fd6;
+  --destaque-escuro: #2b2db0;
+
+  --cor-presencial: #c26a00;
+  --cor-hibrido: #00867a;
+  --cor-remoto: #6b3fd1;
+
+  --verde-bolsa: #0b6b3a;
+  --encerrada: #8a8fa6;
+
+  --raio: 10px;
+  --sombra-foco: 0 0 0 3px rgba(61, 63, 214, .35);
+}
+
+/* ---------- Base ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-family: "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--tinta);
+  background: var(--fundo);
+}
+
+h1, h2, h3, p { margin: 0; }
+
+.conteudo {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.escondido { display: none !important; }
+
+.so-leitor {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* ---------- Cabeçalho ---------- */
+#cabecalho {
+  background: var(--tinta);
+  color: #fff;
+  padding: 2rem 0 2.25rem;
+  border-bottom: 4px solid var(--destaque);
+}
+
+.nome-grupo {
+  font-weight: 800;
+  letter-spacing: .12em;
+  font-size: .95rem;
+  color: #aeb2ff;
+  margin-bottom: .5rem;
+}
+
+#cabecalho h1 {
+  font-size: clamp(1.6rem, 5vw, 2.5rem);
+  line-height: 1.15;
+  font-weight: 800;
+  max-width: 22ch;
+}
+
+.subtitulo {
+  margin-top: .75rem;
+  max-width: 60ch;
+  color: #d3d6ee;
+}
+
+/* ---------- Conteúdo principal ---------- */
+main {
+  flex: 1;
+  padding-top: 1.5rem;
+  padding-bottom: 2.5rem;
+}
+
+/* ---------- Busca e filtro ---------- */
+#area-busca {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 1rem;
+  padding: 1rem;
+  background: var(--superficie);
+  border: 1px solid var(--linha);
+  border-radius: var(--raio);
+}
+
+.campo-grupo {
+  display: flex;
+  flex-direction: column;
+  gap: .35rem;
+  min-width: 0;
+}
+
+.campo-grupo label {
+  font-weight: 600;
+  font-size: .9rem;
+}
+
+input[type="search"],
+select {
+  width: 100%;
+  font: inherit;
+  color: var(--tinta);
+  background: #fff;
+  padding: .65rem .75rem;
+  border: 1px solid #b7bbd2;
+  border-radius: 8px;
+}
+
+input[type="search"]:focus,
+select:focus,
+button:focus-visible,
+.btn-detalhes:focus-visible {
+  outline: none;
+  border-color: var(--destaque);
+  box-shadow: var(--sombra-foco);
+}
+
+/* ---------- Botões ---------- */
+button {
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  color: #fff;
+  background: var(--destaque);
+  border: 2px solid var(--destaque);
+  border-radius: 8px;
+  padding: .6rem 1rem;
+  transition: background-color .15s;
+}
+
+button:hover { background: var(--destaque-escuro); border-color: var(--destaque-escuro); }
+
+button.btn-secundario {
+  color: var(--destaque);
+  background: transparent;
+}
+
+button.btn-secundario:hover {
+  color: #fff;
+  background: var(--destaque);
+}
+
+#area-ordenacao {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .75rem;
+  margin-top: 1rem;
+}
+
+/* ---------- Contador e mensagem vazia ---------- */
+#area-contador {
+  margin: 1.25rem 0 1rem;
+  color: var(--tinta-suave);
+}
+
+#area-contador strong { color: var(--tinta); }
+
+#mensagem-vazia {
+  padding: 1.25rem;
+  text-align: center;
+  color: var(--tinta-suave);
+  background: var(--superficie);
+  border: 2px dashed var(--linha);
+  border-radius: var(--raio);
+}
+
+/* ---------- Lista e cartões ----------
+   Estrutura que o script.js deve gerar para cada vaga:
+
+   <article class="cartao-vaga modalidade-remoto">
+     <div class="cartao-topo">
+       <span class="selo selo-remoto">Remoto</span>
+       <span class="selo-status">Encerrada</span>      (só se ativa === false)
+     </div>
+     <h3 class="cartao-cargo">Estágio em Front-end</h3>
+     <p class="cartao-empresa">PixelForge</p>
+     <p class="cartao-bolsa"><span>Bolsa</span> R$ 1.800</p>
+     <button type="button" class="btn-detalhes">Ver detalhes</button>
+   </article>
+
+   Se a vaga for encerrada, acrescente a classe "cartao-encerrada"
+   no article.
+------------------------------------------------ */
+#lista-vagas {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1rem;
+}
+
+.cartao-vaga {
+  --cor-modalidade: var(--destaque);
+
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+  min-width: 0;
+  padding: 1.1rem 1.1rem 1.1rem 1.25rem;
+  background: var(--superficie);
+  border: 1px solid var(--linha);
+  border-left: 6px solid var(--cor-modalidade);
+  border-radius: var(--raio);
+}
+
+.cartao-vaga:hover { border-color: var(--cor-modalidade); }
+
+.modalidade-presencial { --cor-modalidade: var(--cor-presencial); }
+.modalidade-hibrido    { --cor-modalidade: var(--cor-hibrido); }
+.modalidade-remoto     { --cor-modalidade: var(--cor-remoto); }
+
+.cartao-topo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .5rem;
+}
+
+.selo {
+  display: inline-block;
+  padding: .1rem .6rem;
+  font-size: .8rem;
+  font-weight: 700;
+  color: #fff;
+  background: var(--cor-modalidade);
+  border-radius: 999px;
+}
+
+.selo-presencial { background: var(--cor-presencial); }
+.selo-hibrido    { background: var(--cor-hibrido); }
+.selo-remoto     { background: var(--cor-remoto); }
+
+.selo-status {
+  font-size: .8rem;
+  font-weight: 700;
+  color: #7a1f1f;
+  background: #fbe3e3;
+  padding: .1rem .6rem;
+  border-radius: 999px;
+}
+
+.cartao-cargo {
+  font-size: 1.1rem;
+  line-height: 1.3;
+  overflow-wrap: anywhere;
+}
+
+.cartao-empresa {
+  color: var(--tinta-suave);
+  font-weight: 600;
+}
+
+.cartao-bolsa {
+  margin-top: auto;
+  padding-top: .5rem;
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--verde-bolsa);
+  font-variant-numeric: tabular-nums;
+}
+
+.cartao-bolsa span {
+  display: block;
+  font-size: .8rem;
+  font-weight: 600;
+  color: var(--tinta-suave);
+}
+
+.btn-detalhes {
+  margin-top: .5rem;
+  width: 100%;
+}
+
+.cartao-encerrada { background: #f7f7fa; }
+.cartao-encerrada .cartao-cargo,
+.cartao-encerrada .cartao-empresa { color: var(--encerrada); }
+.cartao-encerrada .cartao-bolsa { color: var(--encerrada); }
+
+/* ---------- Detalhes da vaga ---------- */
+#detalhes-vaga { max-width: 760px; }
+
+.painel-detalhes {
+  margin-top: 1rem;
+  padding: 1.5rem;
+  background: var(--superficie);
+  border: 1px solid var(--linha);
+  border-top: 6px solid var(--destaque);
+  border-radius: var(--raio);
+}
+
+.painel-detalhes h2 { font-size: 1.5rem; margin-bottom: 1rem; }
+.painel-detalhes h3 { margin: 1.5rem 0 .4rem; font-size: 1.1rem; }
+
+.lista-detalhes {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin: 0;
+}
+
+.lista-detalhes dt {
+  font-size: .85rem;
+  font-weight: 600;
+  color: var(--tinta-suave);
+}
+
+.lista-detalhes dd {
+  margin: 0;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+#detalhe-bolsa {
+  color: var(--verde-bolsa);
+  font-weight: 800;
+}
+
+#detalhe-requisitos { max-width: 65ch; }
+
+/* ---------- Rodapé ---------- */
+#rodape {
+  background: var(--tinta);
+  color: #d3d6ee;
+  padding: 1.25rem 0;
+  font-size: .9rem;
+}
+
+#rodape .conteudo { display: grid; gap: .25rem; }
+
+/* ---------- Telas pequenas (até 600px) ---------- */
+@media (max-width: 600px) {
+  #area-busca { grid-template-columns: 1fr; }
+
+  #area-ordenacao button { width: 100%; }
+
+  #lista-vagas { grid-template-columns: 1fr; }
+
+  .painel-detalhes { padding: 1.1rem; }
+}
