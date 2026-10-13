@@ -7,16 +7,17 @@
   <title>ARACHNIX | Mural de Vagas de Estágio em TI</title>
 
   <script>document.documentElement.classList.add("js");</script>
+  <link rel="icon" type="image/png" href="aranha.png">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <!-- ===================== BARRA DE NAVEGAÇÃO ===================== -->
   <nav id="barra" aria-label="Navegação principal">
     <ul class="barra-links">
       <li><a href="#sec-inicio" class="ativo">Início</a></li>
+      <li><a href="#sec-como">Como funciona</a></li>
       <li><a href="#sec-vagas">Vagas</a></li>
-      <li><a href="#sec-time">Time</a></li>
+      <li><a href="#sec-time">Quem somos</a></li>
     </ul>
 
     <button type="button" id="btn-tema" class="btn-icone" aria-label="Trocar cor de destaque" title="Trocar cor de destaque">
@@ -30,19 +31,35 @@
     </button>
   </nav>
 
-  <!-- ===================== SETAS DE NAVEGAÇÃO ===================== -->
   <button id="btn-prev" class="nav-arrow left" aria-label="Página anterior">❮</button>
   <button id="btn-next" class="nav-arrow right" aria-label="Próxima página">❯</button>
 
-  <!-- ===================== CONTAINER HORIZONTAL ===================== -->
+  <div id="aranha" aria-hidden="true"><img src="aranha.png" alt=""></div>
+
   <main id="horizontal-container">
 
-    <!-- ===================== AMBIENTE 1: INÍCIO ===================== -->
     <div class="slide" id="sec-inicio">
       <div class="slide-conteudo">
+
+        <aside class="lateral lateral-esquerda" aria-hidden="true">
+          <div class="lateral-janela"><div class="lateral-trilho" id="trilho-esquerdo"></div></div>
+          <p class="lateral-nota">Depoimentos fictícios, só para demonstração</p>
+        </aside>
+        <aside class="lateral lateral-direita" aria-hidden="true">
+          <div class="lateral-janela"><div class="lateral-trilho" id="trilho-direito"></div></div>
+          <p class="lateral-nota">Depoimentos fictícios, só para demonstração</p>
+        </aside>
+
         <header id="inicio" class="hero">
           <div class="conteudo hero-interno">
-            <p class="nome-grupo">ARACHNIX</p>
+
+            <div class="marca" role="img" aria-label="ARACHNIX, Software development">
+              <img class="marca-aranha" src="aranha.png" alt="">
+              <div class="marca-texto">
+                <span class="marca-nome">ARACHNI<span class="marca-x">X</span></span>
+                <span class="marca-sub">Software development</span>
+              </div>
+            </div>
             <h1>Mural de Vagas de Estágio</h1>
             <p class="subtitulo">
               Reunimos vagas de estágio em tecnologia em um só lugar. Pesquise, filtre e compare as bolsas.
@@ -69,29 +86,83 @@
             </div>
           </div>
         </header>
+      </div>
+    </div>
 
+    <div class="slide slide-centro" id="sec-como">
+      <div class="slide-conteudo">
         <section id="como-funciona" class="secao">
           <div class="conteudo">
             <h2 class="secao-titulo">Como o mural funciona</h2>
-            <p class="secao-intro">Três passos para chegar na vaga certa.</p>
+            <p class="secao-intro">Três passos para chegar na vaga certa. Clique em um passo para ver a explicação completa.</p>
+
             <ol class="passos">
-              <li class="passo"><h3>Pesquise</h3><p>Digite o nome da empresa ou cargo.</p></li>
-              <li class="passo"><h3>Filtre</h3><p>Escolha presencial, híbrido ou remoto.</p></li>
-              <li class="passo"><h3>Compare</h3><p>Ordene pela bolsa e veja os requisitos.</p></li>
+              <li class="passo">
+                <h3 class="passo-h">
+                  <button type="button" class="passo-cabeca" aria-expanded="false" aria-controls="extra-pesquise">
+                    <span class="passo-mais" aria-hidden="true">+</span>
+                    <span class="passo-titulo">Pesquise</span>
+                    <span class="passo-resumo">Digite o nome da empresa ou cargo.</span>
+                  </button>
+                </h3>
+                <div class="passo-extra" id="extra-pesquise">
+                  <div>
+                    <div class="passo-extra-texto">
+                      <p>Use o campo de pesquisa da tela de vagas, ou a busca rápida da tela inicial, para procurar pelo nome da empresa ou pelo cargo. A lista se atualiza a cada letra digitada, sem precisar apertar Enter.</p>
+                      <p>A busca não diferencia maiúsculas de minúsculas e ignora acentos: digitar "estagio" também encontra "Estágio".</p>
+                    </div>
+                  </div>
+                </div>
+              </li>
+
+              <li class="passo">
+                <h3 class="passo-h">
+                  <button type="button" class="passo-cabeca" aria-expanded="false" aria-controls="extra-filtre">
+                    <span class="passo-mais" aria-hidden="true">+</span>
+                    <span class="passo-titulo">Filtre</span>
+                    <span class="passo-resumo">Escolha presencial, híbrido ou remoto.</span>
+                  </button>
+                </h3>
+                <div class="passo-extra" id="extra-filtre">
+                  <div>
+                    <div class="passo-extra-texto">
+                      <p>Escolha entre presencial, híbrido e remoto no seletor de modalidade, ou clique em um dos atalhos da tela inicial, que já levam você para a lista filtrada.</p>
+                      <p>Cada modalidade tem uma cor nos cartões: laranja para presencial, verde-água para híbrido e roxo para remoto. Pesquisa e filtro funcionam juntos.</p>
+                    </div>
+                  </div>
+                </div>
+              </li>
+
+              <li class="passo">
+                <h3 class="passo-h">
+                  <button type="button" class="passo-cabeca" aria-expanded="false" aria-controls="extra-compare">
+                    <span class="passo-mais" aria-hidden="true">+</span>
+                    <span class="passo-titulo">Compare</span>
+                    <span class="passo-resumo">Ordene pela bolsa e veja os requisitos.</span>
+                  </button>
+                </h3>
+                <div class="passo-extra" id="extra-compare">
+                  <div>
+                    <div class="passo-extra-texto">
+                      <p>Use "Ordenar por bolsa" para ver as vagas da maior para a menor bolsa e "Restaurar ordem" para voltar à ordem original. A vaga aberta com a maior bolsa ganha o selo "Maior bolsa".</p>
+                      <p>Em "Ver detalhes" você encontra empresa, cargo, modalidade, bolsa, data de publicação, situação da vaga e requisitos.</p>
+                    </div>
+                  </div>
+                </div>
+              </li>
             </ol>
           </div>
         </section>
       </div>
     </div>
 
-    <!-- ===================== AMBIENTE 2: VAGAS ===================== -->
     <div class="slide" id="sec-vagas">
       <div class="slide-conteudo">
         <div id="vagas" class="secao">
           <div class="conteudo">
             <section id="area-lista">
               <h2 class="secao-titulo">Vagas disponíveis</h2>
-              <p class="secao-intro">Pesquise, filtre e compare. As vagas encerradas continuam aparecendo, mas em cinza.</p>
+              <p class="secao-intro">Pesquise, filtre e compare. As vagas abertas vêm primeiro; as encerradas ficam separadas, em cinza.</p>
 
               <div id="area-busca">
                 <div class="campo-grupo">
@@ -117,11 +188,9 @@
               <p id="area-contador">Vagas encontradas: <strong id="contador-vagas">0</strong></p>
               <p id="mensagem-vazia" class="escondido">Nenhuma vaga encontrada.</p>
 
-              <!-- Lista injetada via JS -->
               <div id="lista-vagas"></div>
             </section>
 
-            <!-- DETALHES DA VAGA -->
             <section id="detalhes-vaga" class="escondido">
               <button type="button" id="btn-voltar" class="btn-secundario">← Voltar para a lista</button>
               <article class="painel-detalhes">
@@ -136,6 +205,23 @@
                 </dl>
                 <h3>Requisitos</h3>
                 <p id="detalhe-requisitos"></p>
+
+                <h3>Como é a vaga</h3>
+                <dl class="lista-detalhes">
+                  <div><dt>Carga horária</dt><dd id="detalhe-carga"></dd></div>
+                  <div><dt>Horário</dt><dd id="detalhe-horario"></dd></div>
+                  <div><dt>Duração do estágio</dt><dd id="detalhe-duracao"></dd></div>
+                </dl>
+
+                <h3>O que você vai fazer</h3>
+                <ul id="detalhe-atividades" class="lista-atividades"></ul>
+
+                <h3>Benefícios</h3>
+                <ul id="detalhe-beneficios" class="lista-beneficios"></ul>
+
+                <div class="area-link">
+                  <a id="detalhe-link" class="link-vaga" href="#" target="_blank" rel="noopener noreferrer">Acessar link da vaga ↗</a>
+                </div>
               </article>
             </section>
           </div>
@@ -143,34 +229,39 @@
       </div>
     </div>
 
-    <!-- ===================== AMBIENTE 3: TIME ===================== -->
-    <div class="slide" id="sec-time">
+    <div class="slide slide-centro" id="sec-time">
       <div class="slide-conteudo">
         <section id="time" class="secao">
           <div class="conteudo">
-            <h2 class="secao-titulo">Quem faz o ARACHNIX</h2>
-            <p class="secao-intro">Projeto da disciplina de Projeto Integrador II, FATEC Zona Leste (ADS 2).</p>
+            <h2 class="secao-titulo">Quem somos</h2>
+            <p class="secao-intro sobre-texto">
+              Somos o ARACHNIX, um grupo de estudantes de Análise e Desenvolvimento de Sistemas da FATEC Zona Leste.
+              Criamos este mural na disciplina de Projeto Integrador II para reunir vagas de estágio em TI em um só lugar
+              e facilitar a busca de quem está começando na área.
+            </p>
+
+            <h3 class="subtitulo-time">Nosso time</h3>
 
             <ul class="time-lista">
               <li class="membro">
-                <span class="avatar"></span>
+                <span class="avatar"><img src="img/miguel.png" alt="Foto de Miguel Willians" onerror="this.remove()"></span>
                 <h3>Miguel Willians</h3>
-                <p>Desenvolvimento Web & Redes</p>
+                <p>Função (CSS e design)</p>
               </li>
               <li class="membro">
-                <span class="avatar"></span>
-                <h3>Nome do integrante 2</h3>
-                <p>Função (ex.: CSS e design)</p>
+                <span class="avatar"><img src="img/gabirel (1).jpeg" alt="Foto do Gabriel" onerror="this.remove()"></span>
+                <h3>Gabriel Oliveira </h3>
+                <p>Função (Dados e Documentação)</p>
               </li>
               <li class="membro">
-                <span class="avatar"></span>
-                <h3>Nome do integrante 3</h3>
-                <p>Função (ex.: JavaScript)</p>
+                <span class="avatar"><img src="img/joao.jpeg" alt="Foto do João" onerror="this.remove()"></span>
+                <h3>João Santana</h3>
+                <p>Função (JavaScript)</p>
               </li>
               <li class="membro">
-                <span class="avatar"></span>
-                <h3>Nome do integrante 4</h3>
-                <p>Função (ex.: dados e testes)</p>
+                <span class="avatar"><img src="img/felipe.jpeg" alt="Foto do Felipe" onerror="this.remove()"></span>
+                <h3>Felipe Viana</h3>
+                <p>Função (HTML)</p>
               </li>
             </ul>
           </div>
@@ -179,7 +270,7 @@
         <footer id="rodape">
           <div class="conteudo">
             <p>© 2026 ARACHNIX - Prova de PI II FATEC ZL (ADS 2 - Prof. Rodrigo Faustino)</p>
-            <p>Time: Miguel Willians, Nome 2, Nome 3, Nome 4</p>
+            <p>Time: Miguel Willians, Felipe Viana, João Santana, Gabriel Oliveira</p>
           </div>
         </footer>
       </div>
@@ -189,66 +280,5 @@
 
   <script src="dados.js"></script>
   <script src="script.js"></script>
-  
-  <!-- ===================== SCRIPT DA NAVEGAÇÃO HORIZONTAL ===================== -->
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const container = document.getElementById('horizontal-container');
-      const slides = document.querySelectorAll('.slide');
-      const btnPrev = document.getElementById('btn-prev');
-      const btnNext = document.getElementById('btn-next');
-      const navLinks = document.querySelectorAll('.barra-links a');
-
-      let currentSlide = 0;
-
-      // Atualiza a visibilidade das setas
-      const updateButtons = () => {
-        btnPrev.style.display = currentSlide === 0 ? 'none' : 'flex';
-        btnNext.style.display = currentSlide === slides.length - 1 ? 'none' : 'flex';
-      };
-
-      // Clique nas setas
-      btnNext.addEventListener('click', () => {
-        if (currentSlide < slides.length - 1) {
-          currentSlide++;
-          slides[currentSlide].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
-        }
-      });
-
-      btnPrev.addEventListener('click', () => {
-        if (currentSlide > 0) {
-          currentSlide--;
-          slides[currentSlide].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
-        }
-      });
-
-      // Observer para sincronizar a Nav Bar ao fazer scroll
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            const id = entry.target.id;
-            
-            // Atualiza os links da nav
-            navLinks.forEach(link => {
-              link.classList.remove('ativo');
-              if (link.getAttribute('href') === `#${id}`) {
-                link.classList.add('ativo');
-              }
-            });
-
-            // Atualiza o índice do slide atual
-            slides.forEach((slide, index) => {
-              if (slide.id === id) currentSlide = index;
-            });
-            
-            updateButtons();
-          }
-        });
-      }, { threshold: 0.6 }); // Ativa quando 60% do slide estiver visível
-
-      slides.forEach(slide => observer.observe(slide));
-      updateButtons();
-    });
-  </script>
 </body>
 </html>
