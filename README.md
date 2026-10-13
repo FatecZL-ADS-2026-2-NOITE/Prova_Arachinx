@@ -12,13 +12,15 @@ O projeto sorteado foi o **Mural de Vagas de Estágio em TI** para o cliente *N�
 - 🔍 Busca instantânea por texto (empresa ou cargo).
 - 🏷️ Filtro de vagas por modalidade (Remoto, Híbrido, Presencial).
 - 💰 Ordenação inteligente pelo valor da bolsa.
-- 📱 Interface totalmente responsiva e adaptada para celulares.
+- 🔢 Contador de vagas encontradas e mensagem quando nada é encontrado.
+- 📄 Detalhes da vaga ao clicar no cartão, com botão para voltar à lista.
+- 📱 Interface responsiva, adaptada para celulares (telas de 400px).
 
 ## 🛠️ Tecnologias e Restrições
 O projeto foi desenvolvido cumprindo rigorosamente as restrições impostas pela disciplina (sem a utilização de banco de dados externo, *frameworks* ou bibliotecas):
 - **HTML5:** Estruturação semântica e acessível.
-- **CSS3:** Estilização nativa com Flexbox/Grid e efeito *Glassmorphism*.
-- **JavaScript (Vanilla):** Manipulação dinâmica do DOM, lógica de filtros e transições.
+- **CSS3:** Estilização nativa com Flexbox e Grid.
+- **JavaScript (Vanilla):** Manipulação dinâmica do DOM, lógica de busca, filtro e ordenação.
 
 ## 👥 Equipe Arachnix: Divisão de Tarefas
 
@@ -33,4 +35,12 @@ Abaixo está a lista dos membros e a responsabilidade de cada um durante o desen
 
 Como o projeto não exige a instalação de um servidor local ou banco de dados, a sua execução é extremamente simples:
 1. Faça o clone deste repositório ou o download dos arquivos.
-2. Abra o arquivo `index.html` em qualquer navegador web moderno.
+2. Abra a pasta `mural-vagas`.
+3. Dê dois cliques no arquivo `index.html` para abrir em qualquer navegador web moderno.
+
+## 📁 Arquivos principais (pasta `mural-vagas`)
+- `index.html`: estrutura da página.
+- `style.css`: estilo e responsividade.
+- `dados.js`: array `VAGAS` com as vagas cadastradas.
+- `script.js`: busca, filtro, contador, ordenação e detalhes das vagas.
+- `docs/`: Levantamento de Requisitos e Modelagem de Dados e Entidades (PDF).
